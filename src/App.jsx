@@ -1,32 +1,42 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './components/Home';
 import RootLayout from './layout/RootLayout';
-import Products, { categoriesCall } from './components/Products';
-import About from './components/About';
-import Category, { ProductsLoader } from './components/Category';
+import CategoryProducts from './components/CategoryProducts';
+import Cart from './components/Cart';
 import ErrorPage from './components/ErrorPage';
+import { fetchCategories, fetchProducts } from './components/NavBar';
 
 function App() {
+  const [cartItems, setCartItems] = [];
   const router = createBrowserRouter([
     {
       path: '/',
       element: <RootLayout />,
+      loader: fetchCategories,
       errorElement: <ErrorPage />,
       children: [
         { index: true, element: <Home /> },
         {
-          path: 'products',
-          element: <Products />,
-          loader: categoriesCall,
-          children: [
-            {
-              path: ':id',
-              element: <Category />,
-              loader: { ProductsLoader },
-            },
-          ],
+          path: 'electronics',
+          element: <CategoryProducts />,
+          loader: () => fetchProducts('electronics'),
         },
-        { path: 'about', element: <About /> },
+        {
+          path: 'jewelery',
+          element: <CategoryProducts />,
+          loader: () => fetchProducts('jewelery'),
+        },
+        {
+          path: "men's clothing",
+          element: <CategoryProducts />,
+          loader: () => fetchProducts("men's clothing"),
+        },
+        {
+          path: "women's clothing",
+          element: <CategoryProducts />,
+          loader: () => fetchProducts("women's clothing"),
+        },
+        { path: 'cart', element: <Cart /> },
       ],
     },
   ]);
