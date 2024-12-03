@@ -1,15 +1,16 @@
 import ProductCard from './ProductCard';
 
-const LoadCards = ({ data }) => {
+const LoadCards = (props) => {
   return (
     <div className="cards-container">
-      {data.map((d) => (
+      {props.data.map((d) => (
         <ProductCard
           key={d.id}
           productId={d.id}
           imgTitle={`${d.title}`}
           imgUrl={d.image}
           price={d.price}
+          {...props}
         />
       ))}
     </div>

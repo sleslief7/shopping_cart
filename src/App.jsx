@@ -2,12 +2,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './components/Home';
 import RootLayout from './layout/RootLayout';
 import CategoryProducts from './components/CategoryProducts';
-import Cart from './components/Cart';
+import Cart, { fetchCartItems } from './components/Cart';
 import ErrorPage from './components/ErrorPage';
 import { fetchCategories, fetchProducts } from './components/NavBar';
+import { useState } from 'react';
 
 function App() {
-  const [cartItems, setCartItems] = [];
+  const [cartItems, setCartItems] = useState([]);
   const router = createBrowserRouter([
     {
       path: '/',
@@ -17,28 +18,24 @@ function App() {
       children: [
         { index: true, element: <Home /> },
         {
-          path: 'electronics',
-          element: <CategoryProducts />,
-          loader: () => fetchProducts('electronics'),
+          path: 'category/:category',
+          element: (
+            <CategoryProducts
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+            />
+          ),
+          loader: fetchProducts,
         },
         {
-          path: 'jewelery',
-          element: <CategoryProducts />,
-          loader: () => fetchProducts('jewelery'),
+          path: 'cart',
+          element: <Cart cartItems={cartItems} setCartItems={setCartItems} />,
+
+          loader: fetchCartItems,
         },
-        {
-          path: "men's clothing",
-          element: <CategoryProducts />,
-          loader: () => fetchProducts("men's clothing"),
-        },
-        {
-          path: "women's clothing",
-          element: <CategoryProducts />,
-          loader: () => fetchProducts("women's clothing"),
-        },
-        { path: 'cart', element: <Cart /> },
       ],
     },
+    { path: '*', element: <ErrorPage /> },
   ]);
   return (
     <>

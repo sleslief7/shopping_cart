@@ -13,19 +13,17 @@ export default function NavBar({ categories, cartCount }) {
         </NavLink>
         {categories.map((category) => {
           return (
-            <NavLink to={`/${category}`} key={category}>
+            <NavLink to={`/category/${category}`} key={category}>
               <li>{category.charAt(0).toUpperCase() + category.slice(1)}</li>
             </NavLink>
           );
         })}
       </ul>
-      <button
-        onClick={() => {
-          navigate('/cart');
-        }}
-      >
-        <i className="fa-solid fa-cart-shopping"></i> {cartCount}
-      </button>
+      <NavLink to="/cart">
+        <button>
+          <i className="fa-solid fa-cart-shopping"></i> {cartCount}
+        </button>
+      </NavLink>
     </div>
   );
 }
@@ -39,7 +37,8 @@ export async function fetchCategories() {
   return await res.json();
 }
 
-export async function fetchProducts(category) {
+export async function fetchProducts({ params }) {
+  const { category } = params;
   const res = await fetch(
     `https://fakestoreapi.com/products/category/${category}`
   );

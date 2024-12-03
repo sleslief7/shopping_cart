@@ -1,5 +1,24 @@
 const ProductCard = (props) => {
-  const { imgTitle, imgUrl, price, productId } = props;
+  const { imgTitle, imgUrl, price, productId, cartItems, setCartItems } = props;
+
+  function handleAddToCart() {
+    const currentItem = cartItems.find((item) => item.itemId === productId);
+    const newQuantity = currentItem
+      ? Math.min(10, currentItem.quantity + 1)
+      : 1;
+
+    if (!currentItem) {
+      setCartItems([
+        ...cartItems,
+        { itemId: Number(productId), quantity: newQuantity },
+      ]);
+    } else {
+      const itemsCopy = [...cartItems];
+      const index = cartItems.findIndex((item) => item.itemId === productId);
+      itemsCopy[index] = { itemId: productId, quantity: newQuantity };
+      setCartItems(itemsCopy);
+    }
+  }
   return (
     <div className="card">
       <img
@@ -8,7 +27,7 @@ const ProductCard = (props) => {
         title="imgTitle"
         className="product-img"
       />
-      <caption className="img-title">{imgTitle}</caption>
+      <figcaption className="img-title">{imgTitle}</figcaption>
       <p className="item-price">${price}</p>
       <button
         className="add-to-cart-btn"
@@ -20,9 +39,5 @@ const ProductCard = (props) => {
     </div>
   );
 };
-
-function handleAddToCart(e) {
-  console.log(e.target.id);
-}
 
 export default ProductCard;
