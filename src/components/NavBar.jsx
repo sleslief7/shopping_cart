@@ -1,7 +1,6 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 export default function NavBar({ categories, cartCount }) {
-  const navigate = useNavigate();
   return (
     <div id="navbar">
       <Link id="logo" to="/">
@@ -26,26 +25,4 @@ export default function NavBar({ categories, cartCount }) {
       </NavLink>
     </div>
   );
-}
-
-export async function fetchCategories() {
-  const res = await fetch('https://fakestoreapi.com/products/categories');
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch categories');
-  }
-  return await res.json();
-}
-
-export async function fetchProducts({ params }) {
-  const { category } = params;
-  const res = await fetch(
-    `https://fakestoreapi.com/products/category/${category}`
-  );
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch ${category}'s products`);
-  }
-
-  return await res.json();
 }

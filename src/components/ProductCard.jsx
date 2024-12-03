@@ -14,11 +14,12 @@ const ProductCard = (props) => {
       ]);
     } else {
       const itemsCopy = [...cartItems];
-      const index = cartItems.findIndex((item) => item.itemId === productId);
-      itemsCopy[index] = { itemId: productId, quantity: newQuantity };
+      const currItem = itemsCopy.find((item) => item.itemId === productId);
+      currItem.quantity = newQuantity;
       setCartItems(itemsCopy);
     }
   }
+
   return (
     <div className="card">
       <img

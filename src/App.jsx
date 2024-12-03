@@ -2,9 +2,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './components/Home';
 import RootLayout from './layout/RootLayout';
 import CategoryProducts from './components/CategoryProducts';
-import Cart, { fetchCartItems } from './components/Cart';
+import Cart from './components/Cart';
 import ErrorPage from './components/ErrorPage';
-import { fetchCategories, fetchProducts } from './components/NavBar';
+import {
+  fetchCartItems,
+  fetchCategories,
+  fetchProducts,
+} from './routeLoaders/routeLoaders';
 import { useState } from 'react';
 
 function App() {
@@ -12,7 +16,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <RootLayout />,
+      element: <RootLayout cartItems={cartItems} />,
       loader: fetchCategories,
       errorElement: <ErrorPage />,
       children: [
