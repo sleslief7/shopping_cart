@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Outlet, useLoaderData } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 

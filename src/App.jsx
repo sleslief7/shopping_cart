@@ -20,7 +20,7 @@ function App() {
       loader: fetchCategories,
       errorElement: <ErrorPage />,
       children: [
-        { index: true, element: <Home /> },
+        { index: true, element: <Home />, loader: fetchProducts },
         {
           path: 'category/:category',
           element: (

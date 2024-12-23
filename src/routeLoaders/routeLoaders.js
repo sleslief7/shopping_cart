@@ -17,9 +17,12 @@ export async function fetchCategories() {
 
 export async function fetchProducts({ params }) {
   const { category } = params;
-  const res = await fetch(
-    `https://fakestoreapi.com/products/category/${category}`
-  );
+  let res;
+  if (!category) {
+    res = await fetch(`https://fakestoreapi.com/products`);
+  } else {
+    res = await fetch(`https://fakestoreapi.com/products/category/${category}`);
+  }
 
   if (!res.ok) {
     throw new Error(`Failed to fetch ${category}'s products`);
