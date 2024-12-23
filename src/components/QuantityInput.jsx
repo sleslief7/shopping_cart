@@ -8,7 +8,7 @@ const QuantityInput = (props) => {
     const currentItem = cartItems.find((item) => item.id === productId);
     const newQuantity = currentItem
       ? Math.min(10, currentItem.quantity + inputQuantity)
-      : 1;
+      : inputQuantity;
 
     if (!currentItem) {
       setCartItems([
