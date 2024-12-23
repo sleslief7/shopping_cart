@@ -1,8 +1,10 @@
+import QuantityInput from './QuantityInput';
+
 const ProductCard = (props) => {
   const { imgTitle, imgUrl, price, productId, cartItems, setCartItems } = props;
 
   function handleAddToCart() {
-    const currentItem = cartItems.find((item) => item.itemId === productId);
+    const currentItem = cartItems.find((item) => item.id === productId);
     const newQuantity = currentItem
       ? Math.min(10, currentItem.quantity + 1)
       : 1;
@@ -10,11 +12,11 @@ const ProductCard = (props) => {
     if (!currentItem) {
       setCartItems([
         ...cartItems,
-        { itemId: Number(productId), quantity: newQuantity },
+        { id: Number(productId), quantity: newQuantity },
       ]);
     } else {
       const itemsCopy = [...cartItems];
-      const currItem = itemsCopy.find((item) => item.itemId === productId);
+      const currItem = itemsCopy.find((item) => item.id === productId);
       currItem.quantity = newQuantity;
       setCartItems(itemsCopy);
     }
@@ -30,6 +32,7 @@ const ProductCard = (props) => {
       />
       <figcaption className="img-title">{imgTitle}</figcaption>
       <p className="item-price">${price}</p>
+      <QuantityInput />
       <button
         className="add-to-cart-btn"
         id={productId}

@@ -2,13 +2,11 @@ import { useLoaderData } from 'react-router-dom';
 
 const Cart = ({ cartItems, setCartItems }) => {
   const data = useLoaderData();
-  const items = data.filter((d) =>
-    cartItems.some((item) => item.itemId === d.id)
-  );
+  const items = data.filter((d) => cartItems.some((item) => item.id === d.id));
   let quantity = Array.from({ length: 10 }, (_, i) => i + 1);
 
   const subtotal = cartItems.reduce(
-    (acc, item) => acc + findPrice(item.itemId) * item.quantity,
+    (acc, item) => acc + findPrice(item.id) * item.quantity,
     0
   );
   const taxRate = 0.04;
@@ -22,12 +20,12 @@ const Cart = ({ cartItems, setCartItems }) => {
   }
 
   function handleDeleteItem(id) {
-    setCartItems([...cartItems.filter((item) => item.itemId !== id)]);
+    setCartItems([...cartItems.filter((item) => item.id !== id)]);
   }
 
   function handleSelectChange(id, newQuantity) {
     let updatedCartItems = [...cartItems];
-    const currItem = updatedCartItems.find((item) => item.itemId === id);
+    const currItem = updatedCartItems.find((item) => item.id === id);
     currItem.quantity = newQuantity;
     setCartItems(updatedCartItems);
   }
@@ -41,7 +39,7 @@ const Cart = ({ cartItems, setCartItems }) => {
     <div id="cart-container">
       <div id="cart-items-container">
         {items.map((item) => {
-          const cartItem = cartItems.find((c) => c.itemId === item.id);
+          const cartItem = cartItems.find((c) => c.id === item.id);
           return (
             <div key={`item-${item.id}`} className="cart-item">
               <div className="cart-item-img-container">

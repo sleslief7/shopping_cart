@@ -178,3 +178,15 @@ img {
   gap: 10px;
   align-items: center;
 }
+
+.quantity-input-container {
+  display: flex;
+  gap: 2px;
+}
+
+.quantity-input {
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
